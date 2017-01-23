@@ -16,7 +16,7 @@ error: function(httpResponse) {
 
 
 
-var PUT_IN_YOUR_URL_AS_A_STRING3 = 'https://db66a8459e8f013d2eaf40481e4bcb9f:fb0cc00eb2dc46b30c464d8a6ac4a3c5@topboxcuts.myshopify.com/admin/orders.json?page=2';
+var PUT_IN_YOUR_URL_AS_A_STRING3 = 'https://key:key@topboxcuts.myshopify.com/admin/orders.json?page=2';
 Parse.Cloud.define("getPage3", function(request, response) {
 
 Parse.Cloud.httpRequest({
@@ -35,7 +35,7 @@ error: function(httpResponse) {
 });
 });
 
-var PUT_IN_YOUR_URL_AS_A_STRING1 = 'https://db66a8459e8f013d2eaf40481e4bcb9f:fb0cc00eb2dc46b30c464d8a6ac4a3c5@topboxcuts.myshopify.com/admin/orders/';
+var PUT_IN_YOUR_URL_AS_A_STRING1 = 'https://key:key@topboxcuts.myshopify.com/admin/orders/';
 var two = '.json';
 
 //+request.params.hello2+/403185860
