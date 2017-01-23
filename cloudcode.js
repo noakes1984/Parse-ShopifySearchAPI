@@ -16,7 +16,7 @@ error: function(httpResponse) {
 
 
 
-var PUT_IN_YOUR_URL_AS_A_STRING3 = 'https://key:key@topboxcuts.myshopify.com/admin/orders.json?page=2';
+var PUT_IN_YOUR_URL_AS_A_STRING3 = 'https://key:AppID@topboxcuts.myshopify.com/admin/orders.json?page=2';
 Parse.Cloud.define("getPage3", function(request, response) {
 
 Parse.Cloud.httpRequest({
