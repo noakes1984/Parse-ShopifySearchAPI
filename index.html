@@ -1,0 +1,312 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>List Generator</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.3.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+  <div id="main">
+    <h1>TOPCUTBREAKS LIST GENERATOR</h1>
+    <h2>Copy and Paste Box Name</h2>
+    <div style="display:none" class="success">
+    </div>
+  </div>
+
+
+<textarea rows="1" cols="100" name="boxName" id="boxName"></textarea><br>
+      
+  <button type="button" onclick="hello()">GENERATE LIST</button><br>
+
+
+
+
+  <script>
+
+  Parse.initialize("gqbCyZKXngT4jjinDD7LLvttdjZLYZSek9Qtb9H9", "5agmUrhOR8Iijl6VKI8yeUDc9kjkNQQB2OIbdQac");
+
+
+  function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+    
+
+function hello(){
+	
+Parse.Cloud.run('getPage', {}, {
+  success: function(result) {
+
+    hello2();
+
+var arrayAtLast;
+
+var results = JSON.parse(result);
+var i;
+var l;
+
+for(i = 0, l = results.orders.length; i < l; i++) {
+
+var res = results.orders[i].line_items;
+var res2 = results.orders[i];
+var customers = results.orders[i].customer;
+//console.log(res2.id);
+
+for(var first in res)
+      {
+        if (res.hasOwnProperty(first)) 
+        {    
+
+          var objCount = res[first].length;
+          var obj = res[first];
+          var name_element = document.getElementById('boxName');
+
+          var firstFour = name_element.value.substring(0,4);
+          var firstFourObjName = obj.name.substring(0,4);
+          var firstFourObjTitle = obj.title.substring(0,4);
+
+
+
+
+              if (obj.title==name_element.value || obj.name==name_element.value || obj.title.substring(0,4) == name_element.value || obj.name.substring(0,4)==name_element.value){
+
+            console.log(firstFour +"      " + firstFourObjName + "    " +firstFourObjTitle);
+
+
+
+                ////////added for second page orders
+
+      
+
+                /////////
+            
+                        var hello = res2.id;
+            
+            Parse.Cloud.run('getPage2', { hello2: hello }, {
+                  success: function(result) {
+
+                     var last = JSON.parse(result);
+                    
+                    for(i=0; i<last.order.line_items.length; i++){
+
+                      if(last.order.line_items[i].name==name_element.value || last.order.line_items[i].title==name_element.value){
+                      
+                      var LastArray = new Array();
+                      LastArray = Array((last.order.line_items[i].quantity*2)+1).join(last.order.shipping_address.name+"          ");
+                      //console.log(LastArray);
+
+                      var res = LastArray.split("          ");
+                      
+
+                      for(i=0; i<res.length; i++)
+                      {
+
+                        arrayAtLast=res[i];
+
+                        //console.log(res[i]);
+                       
+
+                        var listContainer = document.createElement("div");
+
+                                // add it to the page
+                                document.getElementsByTagName("body")[0].appendChild(listContainer);
+
+                                // Make the list itself which is a <ul>
+                                var listElement = document.createElement("ul");
+
+                                // add it to the page
+                                listContainer.appendChild(listElement);
+//qat goes through the items in listItems one at a time
+                                var numberOfListItems= res.length-1;
+
+                                for(i=0; i < numberOfListItems; ++i)
+                                {
+                
+                                        // create a <li> for each one.
+                                        var listItem = document.createElement("li");
+
+                                        //console.log(res[i]);
+
+                                        // add the item text
+                                        listItem.innerHTML = res[i];
+
+                                        // add listItem to the listElement
+                                        listElement.appendChild(listItem);
+
+                                        //console.log(listItem);
+
+                                }
+
+                      }
+
+
+                      }
+                    }
+
+                  },
+                  error: function(error) {
+                  }
+              });
+        }
+      }
+
+    }
+  }
+
+  
+},
+  error: function(error) {
+    }
+  });
+};
+
+
+ function hello2(){
+  
+Parse.Cloud.run('getPage3', {}, {
+  success: function(result) {
+
+var arrayAtLast;
+
+var results = JSON.parse(result);
+var i;
+var l;
+
+for(i = 0, l = results.orders.length; i < l; i++) {
+
+var res = results.orders[i].line_items;
+var res2 = results.orders[i];
+var customers = results.orders[i].customer;
+//console.log(res2.id);
+
+for(var first in res)
+      {
+        if (res.hasOwnProperty(first)) 
+        {    
+
+          var objCount = res[first].length;
+          var obj = res[first];
+          var name_element = document.getElementById('boxName');
+
+          var firstFour = name_element.value.substring(0,4);
+          var firstFourObjName = obj.name.substring(0,4);
+          var firstFourObjTitle = obj.title.substring(0,4);
+
+
+
+
+              if (obj.title==name_element.value || obj.name==name_element.value || obj.title.substring(0,4) == name_element.value || obj.name.substring(0,4)==name_element.value){
+
+            console.log(firstFour + "      " + firstFourObjName + "      " +firstFourObjTitle);
+
+
+
+                ////////added for second page orders
+
+               
+
+                /////////
+            
+                        var hello = res2.id;
+            
+            Parse.Cloud.run('getPage2', { hello2: hello }, {
+                  success: function(result) {
+
+                     var last = JSON.parse(result);
+                    
+                    for(i=0; i<last.order.line_items.length; i++){
+
+                      if(last.order.line_items[i].name==name_element.value || last.order.line_items[i].title==name_element.value){
+                      
+                      var LastArray = new Array();
+                      LastArray = Array((last.order.line_items[i].quantity*2)+1).join(last.order.shipping_address.name+"          ");
+                      //console.log(LastArray);
+
+                      var res = LastArray.split("          ");
+                      
+
+                      for(i=0; i<res.length; i++)
+                      {
+
+                        arrayAtLast=res[i];
+
+                        //console.log(res[i]);
+                       
+
+                        var listContainer = document.createElement("div");
+
+                                // add it to the page
+                                document.getElementsByTagName("body")[0].appendChild(listContainer);
+
+                                // Make the list itself which is a <ul>
+                                var listElement = document.createElement("ul");
+
+                                // add it to the page
+                                listContainer.appendChild(listElement);
+//qat goes through the items in listItems one at a time
+                                var numberOfListItems= res.length-1;
+
+                                for(i=0; i < numberOfListItems; ++i)
+                                {
+                
+                                        // create a <li> for each one.
+                                        var listItem = document.createElement("li");
+
+                                        //console.log(res[i]);
+
+                                        // add the item text
+                                        listItem.innerHTML = res[i];
+
+                                        // add listItem to the listElement
+                                        listElement.appendChild(listItem);
+
+                                        //console.log(listItem);
+
+                                }
+
+                      }
+
+
+                      }
+                    }
+
+                  },
+                  error: function(error) {
+                  }
+              });
+        }
+      }
+
+    }
+  }
+
+  
+},
+  error: function(error) {
+    }
+  });
+};
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>
+
